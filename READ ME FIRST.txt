@@ -1,0 +1,19 @@
+The largest java file here is the BattleMap class. Compiling and launching it starts the game. Alternatively, a bat file is already created to automatically launch it in windows. 
+
+GENERAL DESCRIPTION:
+Tower defense is a game where you build towers inorder to prevent large swarms of enemy units from overtaking your base. Every kill earns you points, and those points can be used to upgrade or purchase more towers. Be careful though, as creating more towers means you have less points. If your total number of points reach zero, you will lose!
+
+OBJECTIVE:
+Prevent units from crossing into the center of the map. This is accomplished by destroying units through building towers. 
+
+CONTROLS:
+W, A, S, D moves the map up, left, down, right. Scrolling the mouse wheel zooms in or out of the map.
+
+STARTING THE GAME:
+
+click on the "Tower Defense.bat" file or compile and launch BattleMap.java
+
+GENERAL PURPOSE:
+
+I built this game as a way for me to get the hang of java and all of its principles. It isn't the most fun game I've made, and it could use a bit more polish such as sound effects and a content creator, but it works smoothly (except in certain cases like when you have lots of effects on the screen).
+
