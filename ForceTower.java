@@ -6,11 +6,9 @@ public class ForceTower extends LightningTower{
 	public ForceTower(double X,double Y){
 		super(X,Y);
 	}
-
 	public ForceTower(){
 		super();
 	}
-
 	public void initBody(){
 		double[][] Xcords = {
 		{-11.0, -26.0, -26.0, -18.0, -8.0, -25.0, -25.0, -14.0, -3.0, 5.0, 23.0, 25.0, 6.0, 24.0, 24.0, 11.0, 1.0 },
@@ -24,7 +22,6 @@ public class ForceTower extends LightningTower{
 		int[][] colours = {{2,12,122}, {0,150,150},{0,0,0},{0,0,0}};
 		for(int i = 0; i < Xcords.length; i++){
 			addBody(colours[i][0],colours[i][1],colours[i][2], Xcords[i],Ycords[i]);
-
 		}
 	}
 	
@@ -38,7 +35,6 @@ public class ForceTower extends LightningTower{
  			{33.0, 53.0, 64.0, 61.0},
  			{-47.0, -63.0, -59.0, -51.0},
  			{30.0, 56.0, 68.0, 65.0}
- 			
  		};
 		double[][] Ycords = {
 			{-23.0, -2.0, 21.0, -3.0},
@@ -53,10 +49,8 @@ public class ForceTower extends LightningTower{
 		Color[] colours = {new Color(255,255,255), new Color(150,150,150),new Color(255,0,0),new Color(255,0,0)};
 		for(int i = 0; i < Xcords.length; i++){
 			addTurret( 255,255,255, Xcords[i],Ycords[i]);
-
 		}
 		rotateTurret(-Math.PI/2.0);
-		  		
 	}
 	
 	public void initStats(){
@@ -74,30 +68,19 @@ public class ForceTower extends LightningTower{
 		ForceTower tmp = new ForceTower(x,y);
 		tmp.init(units,tower,grid,weapons,effects);
 		tower.add( tmp );
-		
 	}
 	public void attack(Unit enemy){
-		
 		if(heatCounter >= heat){
-
 			weapons.add( new ForceField(effects,grid,pos[0],pos[1],ang,bulletRad,range,ap) );
-			
 			fireX = enemy.getX();
 			fireY = enemy.getY();
 			int i = 1;
 			Iterator<Unit> m = allTargets.iterator();
-		
-
 			while( m.hasNext() && i < level ){
 				Unit n = m.next();
-
 				weapons.add( new ForceField(effects,grid,n.getX(),n.getY(),ang,bulletRad,range,ap) );
 				} 
 				i+=5;
 		}
-		else{
-
-		}
 	}	
-	
 }

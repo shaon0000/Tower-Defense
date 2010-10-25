@@ -20,15 +20,9 @@ public class Tower extends Unit implements Comparable{
  */
 	public int compareTo( Object other){
 		Tower temp = (Tower)(other);
-		if(temp.level > this.level){
-			return -1;
-		}
-		else if (temp.level < this.level){
-			return 1;
-		}
-		else{
-			return 0;
-		}
+		if(temp.level > this.level){return -1;}
+		else if (temp.level < this.level){return 1;}
+		else{return 0;}
 	}
 	public Tower(double X,double Y){
 		super(X,Y);
@@ -43,40 +37,20 @@ public class Tower extends Unit implements Comparable{
 		int[][] colours = {{150,150,0}, {150,0,0},{255,0,0},{255,0,0}};
 		for(int i = 0; i < Xcords.length; i++){
 			addBody(colours[i][0],colours[i][1],colours[i][2], Xcords[i],Ycords[i]);
-
 		}
 	}
 	
 	public void initTurret(){
  		double[][] Xcords = {
- 			{-7.0, 1.0, 8.0, 0.0 },
- 			{-15.0, 0.0, 15.0, -1.0},
- 			{-19.0, -1.0, 20.0, -2.0},
- 			{-21.0, -26.0, -15.0},
- 			{-11.0, -17.0, -8.0},
- 			{-4.0, -6.0, -1.0, 0.0 },
- 			{7.0, 6.0, 13.0 },
- 			{15.0, 15.0, 22.0 }
- 			//{-28.0, -38.0, -24.0, 23.0, 37.0, 33.0, 23.0, 22.0, -22.0, -24.0}
+ 			{-7.0, 1.0, 8.0, 0.0 },{-15.0, 0.0, 15.0, -1.0},{-19.0, -1.0, 20.0, -2.0},{-21.0, -26.0, -15.0},{-11.0, -17.0, -8.0},{-4.0, -6.0, -1.0, 0.0 },{7.0, 6.0, 13.0 },{15.0, 15.0, 22.0 }
  		};
-		double[][] Ycords = {
-			{-26.0, -13.0, -26.0, -23.0},
-			{-28.0, -3.0, -28.0, 3.0 },
-			{-27.0, 12.0, -27.0, 20.0 },
-			{-9.0, 6.0, 90.0},
-			{6.0, 15.0, 88.0 },
-			{24.0, 29.0, 88.0, 26.0 },
-			{9.0, 87.0, 17.0},
-			{-9.0, 86.0, 6.0}
-			//{-16.0, -35.0, -47.0, -49.0, -40.0, -19.0, -23.0, -32.0, -35.0, -26.0}
+		double[][] Ycords = {{-26.0, -13.0, -26.0, -23.0},{-28.0, -3.0, -28.0, 3.0 },{-27.0, 12.0, -27.0, 20.0 },{-9.0, 6.0, 90.0},{6.0, 15.0, 88.0 },{24.0, 29.0, 88.0, 26.0 },{9.0, 87.0, 17.0},{-9.0, 86.0, 6.0}
 		};
 		int[][] colours = { {50,50,50},{50,50,50},{150,150,150},{20,0,0},{225,5,5},{20,0,0},{225,5,5},{50,50,50},{50,50,50} };
 		for(int i = 0; i < Xcords.length; i++){
 			addTurret( colours[i][0],colours[i][1],colours[i][2], Xcords[i],Ycords[i]);
-
 		}
 		rotateTurret(-Math.PI/2.0);
-		  		
 	}
 	
 	public void initStats(){
@@ -93,11 +67,9 @@ public class Tower extends Unit implements Comparable{
 	}
 	
 	public void scan(){
-		
 		/* if the unit has no target to attack,
 		 * it scans through the list of units to attack
 		 */
-		
 		Unit closest = null;
 		double dist=Integer.MAX_VALUE;
 		for ( Unit i : units ){
@@ -125,44 +97,33 @@ public class Tower extends Unit implements Comparable{
 	
 	protected double fireX;
 	protected double fireY;
-	
 	public void attack( Unit enemy ){
-		
 		if(heatCounter >= heat){
-			
 			fireX = enemy.getX();
 			fireY = enemy.getY();
 			for(int i = 0; i < level; i++){
 				weapons.add( warhead(pos[0],pos[1],enemy) );
 			}
 		}
-
-		
 	}
 	public Bullet warhead(double x,double y,Unit enemy){
 		return new Bullet(effects,grid,x+randint(rand*-1,rand),y+randint(rand*-1,rand),enemy.getX()+randint(rand*-1,rand),enemy.getY()+randint(rand*-1,rand),ang,bulletV,bulletRad,ap);
 	}
 	public void hunt(){
-		
 		if (target != null){
-			
 			if(checkUnit(target) && target.getAlive() == true){
 				pointAtUnit(target);
 				attack(target);
-				
 			}
 			else{
 				target = null;
 				allTargets.clear();
 			}
 		}
-		
 	}
 	
 	public boolean checkUnit( Unit enemy ){ // check if the enemy unit is in range
-		
 		if ( Math.hypot(enemy.getX()-pos[0],enemy.getY()-pos[1]) <= range ){
-
 			return true;
 		}
 		return false;
@@ -179,21 +140,14 @@ public class Tower extends Unit implements Comparable{
 	public void heatBar( Graphics g, JFrame c){
 		g.setColor(Color.red);
 		g.drawRect((int)scaledX,(int)scaledY+(int)(5*scaleVal/Global.MAX_SIZE),(int)(50*scaleVal/Global.MAX_SIZE),(int)(5*scaleVal/Global.MAX_SIZE));
-		
 		g.setColor(Color.yellow);
 		g.fillRect((int)scaledX,(int)scaledY+(int)(5*scaleVal/Global.MAX_SIZE),(int)(50*heatCounter*scaleVal/Global.MAX_SIZE/heat),(int)(5*scaleVal/Global.MAX_SIZE));	
 		
 	}
 	public void work(){
 		heatCounter++;
-		if(target == null){
-
-			scan();
-		}
-		else{
-
-			hunt();
-		}
+		if(target == null){ scan(); }
+		else{ hunt(); }
 		if (heatCounter > heat-1){
 			if(target == null){
 				heatCounter = heat;
@@ -202,7 +156,5 @@ public class Tower extends Unit implements Comparable{
 				heatCounter = 0;
 			}
 		}
-	}
-
-		
+	}		
 }

@@ -27,19 +27,18 @@ public class D3{
 	    return y;
 	}
 	
-	public static void circle3D (double X, double Y,double Z, double rad,Color colour, Graphics g,JFrame canvas){
+	public static void circle3D (double X, double Y,double Z, double rad,Color colour, Graphics g,JFrame canvas){ // draw a filled circle
         int rad3D = (int)(depth(Z)*rad);
         g.setColor(colour);
         g.fillOval((int)(zX(X,Z)-rad3D),(int)(zY(Y,Z)-rad3D),2*rad3D,2*rad3D);
     }
     
-	public static void drawCircle3D (double X, double Y,double Z, double rad,Color colour, Graphics g,JFrame canvas){
+	public static void drawCircle3D (double X, double Y,double Z, double rad,Color colour, Graphics g,JFrame canvas){ // draw an outline of a circle
         int rad3D = (int)(depth(Z)*rad);
         g.setColor(colour);
         g.drawOval((int)(zX(X,Z)-rad3D),(int)(zY(Y,Z)-rad3D),2*rad3D,2*rad3D);
     }
-	public static void line3D(double X1, double Y1, double Z1, double X2, double Y2, double Z2, Color colour,Graphics g,JFrame canvas){
-		
+	public static void line3D(double X1, double Y1, double Z1, double X2, double Y2, double Z2, Color colour,Graphics g,JFrame canvas){ // draw a 3d line
 		g.setColor(colour);
 		g.drawLine((int)zX(X1,Z1),(int)zY(Y1,Z1),(int)zX(X2,Z2),(int)zY(Y2,Z2));
 		 

@@ -45,25 +45,19 @@ public class GUI{
 	}
 
 	public void check(int MX, int MY, int MB){
-
 			for ( MyMenu i: menuSet ){
-
 				if(i.getVisible()){
 					i.check(MX,MY,MB);
-
 				}
 			}
-
 	}
 
 	public  myButton getActiveButton(String menuName ){
 		return menus.get(menuName).getActiveButton();
 	}
-
 	public void deactivate( String menuName ){
 		menus.get(menuName).depressActiveButton();
 	}
-
 	public String getActiveButtonName( String menuName ){
 		myButton act = menus.get(menuName).getActiveButton();
 		String emp = null;
@@ -74,18 +68,15 @@ public class GUI{
 			return act.getName();
 		}
 	}
-
 	public void reset(){
 		for ( MyMenu i: menuSet ){
 			i.depressActiveButton();
 		}
 	}
-
 	public void draw(Graphics g,JFrame canvas){
 		for(MyMenu i: menuSet){
 			if(i.getVisible())
 				i.draw(g,canvas);
 		}
 	}
-
 }

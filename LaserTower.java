@@ -32,20 +32,9 @@ public class LaserTower extends Tower{
 		{22.0, 33.0, 36.0, 28.0 },
 		{20.0, 30.0, 32.0, 20.0}
 		};
-		int[][] colours = {
-			{255,0,0}, 
-			{255,255,255},
-			{150,150,150},
-			{255,255,255},
-			{150,150,150},
-			{255,255,255},
-			{150,150,150},
-			{255,255,255},
-			{150,150,150}
-		};
+		int[][] colours = {{255,0,0}, {255,255,255},{150,150,150},{255,255,255},{150,150,150},{255,255,255},{150,150,150},{255,255,255},{150,150,150}};
 		for(int i = 0; i < Xcords.length; i++){
 			addBody(colours[i][0],colours[i][1],colours[i][2], Xcords[i],Ycords[i]);
-
 		}
 		grow(0.5);
 	}
@@ -71,10 +60,8 @@ public class LaserTower extends Tower{
 		rotateTurret(-Math.PI/2.0);
 		for(Poly i: turret){
 			i.grow(0.5);
-		}
-		  		
+		}	  		
 	}
-	
 	public void initStats(){
 		 hp=500; // hit points
 		 ap=10; // attack power
@@ -92,9 +79,7 @@ public class LaserTower extends Tower{
 		tower.add( tmp );
 	}
 	public void attack(Unit enemy){
-		
 		if(heatCounter >= heat){
-			
 			fireX = enemy.getX () ;
 			fireY = enemy.getY () ;
 			int i = 1 ;
@@ -111,11 +96,6 @@ public class LaserTower extends Tower{
 			}	
 		}
 		else{
-
-		}
-		
+		}	
 	}
-	
-	
-	
 }

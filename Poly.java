@@ -1,8 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-class Poly{
-	
+class Poly{	
 	private double[] x; // original X-cordinates
 	private double[] y; // original Y-cordinates
 	private double [] finalX; // after scaling
@@ -11,11 +10,7 @@ class Poly{
 	private int [] convertY; // integer versions of finalY
 	private Color colour;
 	private boolean select = false;
-	
-	public void setSelect(boolean select){
-		this.select = select;
-	}
-	
+	public void setSelect(boolean select){this.select = select;}
 	public Poly(double[] x, double [] y,Color colour){
 		this.x = new double[x.length];
 		this.y = new double[y.length];
@@ -23,8 +18,7 @@ class Poly{
 		for(int i = 0; i < x.length; i++){
 			this.x[i] = x[i];
 			this.y[i] = y[i];
-		}
-		
+		}	
 		this.colour = colour;
 		finalX = new double[x.length];
 		finalY = new double[y.length];
@@ -76,17 +70,14 @@ class Poly{
 		word +="}";
 		return word;
 	}
-	
 	private int grayFactor = 255; // the gray colour of the outline
 	private int decay = -10; // the rate at which the color increases or dicreases in intensity
-	
 	public void draw ( Graphics g, JFrame canvas){
 		// draw the polygon
 		for(int i = 0; i < x.length; i++){
 			convertX[i] = (int)(finalX[i]);
 			convertY[i] = (int)(finalY[i]);
 		}
-
 		g.setColor(colour);
 		if (select)
 			g.drawPolygon(convertX,convertY,finalX.length);
@@ -98,11 +89,8 @@ class Poly{
 			if (grayFactor <= 0 || grayFactor >= 255 ){
 				decay *= -1;
 				grayFactor += decay;
-			}
-			
-			
-		}
-		
+			}	
+		}	
 	}
 	public Poly produce(){
 		double[]tempX = new double[x.length];
@@ -114,5 +102,4 @@ class Poly{
 		Poly temp = new Poly(tempX,tempY,this.colour);
 		return temp;
 	}
-	
 }

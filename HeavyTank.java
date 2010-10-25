@@ -1,5 +1,4 @@
-public class HeavyTank extends Unit{
-	
+public class HeavyTank extends Unit{	
 	public HeavyTank(){
 		super();
 	}
@@ -14,16 +13,10 @@ public class HeavyTank extends Unit{
 		int[][] colours = {{255,255,0}, {255,150,150},{255,0,0},{255,0,0}};
 		for(int i = 0; i < Xcords.length; i++){
 			addBody( colours[i][0],colours[i][1],colours[i][2], Xcords[i],Ycords[i]);
-
 		}
 		rotateBody(-Math.PI/2.0);
 	}
-	
-	public void initTurret(){
-
-		  		
-	}
-	
+	public void initTurret(){}
 	public void initStats(){
 		 hp=10; // hit points
 		 ap=0; // attack power

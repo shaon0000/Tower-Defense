@@ -1,52 +1,34 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-
 /* creates and manages tower production and upgrades */
-
-
 class Player{
-
 	private int money = 500;
-	private int MX,MY,MB;
-	private int mapMX, mapMY; // the map coordinates of the mouse
-	private int tx,ty,tb; // the previous mouse location
-	private int mapTX, mapTY; // the previous mouse location on the map
+	private int MX,MY,MB, mapMX, mapMY, tx, ty, tb, mapTX, mapTY;
 	private GUI gui;
-
 	private boolean selecting; // is the player currently selecting anything
 	private boolean alive = true; // is the player alive
 	public Player( GUI gui ){
 		this.gui = gui;
 	}
-
 	public void updateMouse(int[] mP, int b, int [] convertedMP){
-		tb = MB;
-		MX = mP[0];
-		MY = mP[1];
-		mapMX = convertedMP[0];
+		tb = MB; // previous mouse click
+		MX = mP[0]; // new mouse position
+		MY = mP[1]; 
+		mapMX = convertedMP[0]; // where on the map was it clicked
 		mapMY = convertedMP[1];
-
-		MB = b;
-
+		MB = b; // new mouse click
 	}
-
 	public void addMoney( int n){
 		money += n;
 		if (money < 0){
 			alive = false;
 		}
 	}
-
-	public boolean getAlive(){
-		return alive;
-	}
-
+	public boolean getAlive(){return alive;}
 	public void build(Cell[][] grid,HashMap<String,Tower> buildSet,String name,LinkedList<Tower>towers){
-
 		// build a tower on the map based on specific conditions
 		// the mouse has to be pressed and the tower has to be affordable
-
 		if ( MB == 1 && tb == 0 && MX > 128 && gui.getVisible("main") && name != null && money >= Global.towerCost ){
 			double locX = (int)(mapMX/Global.MAX_SIZE)*Global.MAX_SIZE;
 			double locY = (int)(mapMY/Global.MAX_SIZE)*Global.MAX_SIZE;
@@ -59,18 +41,14 @@ class Player{
 				if (checkAroundCell(grid,tileX,tileY)){
 					money -= Global.towerCost;
 					buildSet.get(name).produce((double)locX,(double)locY);
-
 				}
-
 			}
-
 		}
 	}
 
 	public boolean checkAroundCell(Cell[][] grid, int cellX, int cellY ){
 		/* before a tower can be built, the area around the tower must be almost clear.
 		 * Only one tower can be around the new tower*/
-
 		int numberOfBlockedCells = 0;
 		int[][] checks = {{0,0},{0,1},{0,-1},{1,0},{-1,0},{1,1},{-1,-1},{-1,1},{1,-1}};
 		if(grid[cellX][cellY].getBlock() == true){
@@ -84,26 +62,15 @@ class Player{
 						numberOfBlockedCells++;
 					}
 				}
-
 		}
-		if(numberOfBlockedCells < 2){
-
-			return true;
-		}
-		else{
-
-			return false;
-		}
+		if(numberOfBlockedCells < 2){return true;}
+		else{return false;}
 	}
 
 	LinkedList<Tower> selected = new LinkedList<Tower>();
-
 	public void selection(LinkedList<Tower> choices){
-
 		double [] tmp = { mapTX,mapTY,mapMX-mapTX,mapMY-mapTY }; // create a rectangle
-
 		normalize(tmp); // fix the rectangle if it has negative width or height
-
 		tmp[2] += tmp[0]; // change the width and height to coordintes
 		tmp[3] += tmp[1];
 		for(Tower i: choices){
@@ -117,11 +84,9 @@ class Player{
 			gui.setVisible("main",false);
 			gui.deactivate("main");
 		}
-
-
 	}
+	
 	public void upgradeSelection(){ // upgrade the units based on what the user clicked in the "upgrade" menu
-
 		if(selected.size() > 0 && MB == 1 && tb == 0 && gui.getVisible("upgrades") && money >= Global.upgradeCost*selected.size()){
 			String name = gui.getActiveButtonName("upgrades");
 			if(name != null){
@@ -148,7 +113,6 @@ class Player{
 				money -= Global.upgradeCost*selected.size();
 			}
 		}
-
 	}
 
 	public void highlight(LinkedList<Tower>choices){
@@ -158,10 +122,8 @@ class Player{
 		if ( MB == 0 && selecting == false ){
 			tx = MX;
 			ty = MY;
-
 			mapTX = mapMX;
 			mapTY = mapMY;
-
 		}
 		else if(MB == 0 && selecting == true){
 			this.selecting = false;
@@ -177,7 +139,6 @@ class Player{
 				gui.setVisible("main",true);
 				gui.setVisible("upgrades",false);
 			}
-
 		}
 	}
 
@@ -200,16 +161,13 @@ class Player{
 				attack += i.getAttack();
 				level += i.getLevel();
 			}
-
 			range /= selected.size();
 			attack /= selected.size();
 			level /= selected.size();
-
 			BattleMap.statList.add(" average level: "+(int)level ) ;
 			BattleMap.statList.add(" average range: "+(int)range ) ;
 			BattleMap.statList.add(" average attack: "+(int)attack ) ;
 			BattleMap.statList.add(" upgrade cost: "+ Global.upgradeCost*selected.size() ) ;
-
 		}
 	}
 	public void normalize(int[] box){
@@ -238,7 +196,6 @@ class Player{
 			temp = box[0];
 			box[0] = box[2];
 			box[2] = temp;
-
 		}
 		if (box[3] < box[1]){
 			temp = box[1];
@@ -246,7 +203,4 @@ class Player{
 			box[3] = box[1];
 		}
 	}
-
-
-
 }

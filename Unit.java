@@ -11,17 +11,12 @@ public class Unit {
 	 * the variables are referred with "test" because they are for testing
 	 * purpose only
 	 */
-
 	static double[]testX = {-5,0,5,1,5,0,-5,-1};
 	static double[]testY = {-5,-1,-5,0,5,1,5,0};
 	static Poly testBody = new Poly(testX,testY);
-
 	static double[] turretX = {0,7,0};
 	static double[] turretY = {-1,0,1};
 	static Poly testTurret = new Poly( turretX,turretY,new Color(100,200,254) );
-
-
-
 	// the box is the bounding box width and height
 	protected int [] box = {(int)(10*1.5),(int)(10*1.5)};
 	protected double [] boxX;
@@ -46,14 +41,10 @@ public class Unit {
 	protected int cellY;
 	protected int oldCellX;
 	protected int oldCellY;
-
 	public double getRange(){ return range;}
 	public double getAttack(){ return ap;}
 	public double getLevel(){ return level;}
-
-
 	/***======= path finding variables ==========***/
-
 	protected boolean searchingPath; // is the object searching for a path
 	protected boolean move; // is the object moving
 	protected boolean foundPath; // did the object find a path
@@ -65,36 +56,25 @@ public class Unit {
 	protected Point nextCell = null;
 	protected int nextX = 0;
 	protected int nextY = 0;
-
 	protected double finalPointX = 0;
 	protected double finalPointY = 0;
 	protected int destinationCellX;
 	protected int destinationCellY;
 	protected Cell[][] grid;
-
-
-
-
 	/***** COMMAND VARIABLES *****/
 	protected boolean select; // is the object selected
 	protected boolean attack; // is the object going to attack
 	protected boolean searchingForEnemey; // is the object searching for an enemy;
 	protected boolean foundEnemy; // did the unit fnd an enemy
-
-
 	/* ~~~~~~~~~~~~~~~~~~~~~ scan/attack/hunt variables ~~~~~~~~~~ */
 	protected Unit target; // the enemies that this unit is going to keep hunting
 	protected LinkedList<Unit> allTargets = new LinkedList<Unit>();
 	protected int heat;
 	protected int heatCounter;
-
 	protected LinkedList<Poly> body; // body frame
 	protected LinkedList<Poly> turret; // turret frame
-
-
 	protected Graphics g;
 	protected JFrame c;
-
 	protected int level = 1;
 	public void nextLevel(){
 		level++;
@@ -108,41 +88,16 @@ public class Unit {
 		hp = maxHp;
 		level = n;
 	}
-
-	public void multiplyRange(double val){
-		range *= val;
-	}
-
-	public void multiplyAP(double val){
-		ap *= val;
-	}
-
-	public void multiplyHP( double val ){
-		maxHp *= val;
-	}
-
-	public void multiplyDamageRadius( double val ){
-		bulletRad *= val;
-	}
-	public int randint(int a, int b){
-		return (int)(Math.random()*(b-a+1)) + a;
-
-	}
-	public double getX(){
-		return pos[0];
-	}
-	public double getY(){
-		return pos[1];
-	}
-	public int getCellX(){
-		return cellX;
-	}
-	public int getCellY(){
-		return cellY;
-	}
-	public String toString(){
-		return "hp: "+hp+" cell: ("+cellX+","+cellY+")";
-	}
+	public void multiplyRange(double val){range *= val;}
+	public void multiplyAP(double val){ap *= val;}
+	public void multiplyHP( double val ){maxHp *= val;}
+	public void multiplyDamageRadius( double val ){bulletRad *= val;}
+	public int randint(int a, int b){return (int)(Math.random()*(b-a+1)) + a;}
+	public double getX(){return pos[0];}
+	public double getY(){return pos[1];}
+	public int getCellX(){return cellX;}
+	public int getCellY(){return cellY;}
+	public String toString(){return "hp: "+hp+" cell: ("+cellX+","+cellY+")";}
 	public Unit(double X,double Y){
 		this.pos = new double[2] ;
 		pos[0] = X;
@@ -188,22 +143,12 @@ public class Unit {
 		testingMode();
 	}
 
-	public void initBody(){
-
-	}
-
-
-	public void initTurret(){
-
-	}
-
+	public void initBody(){}
+	public void initTurret(){}
 	protected LinkedList<Unit> units;
 	protected LinkedList<Tower> tower;
 	protected LinkedList<Weapon> weapons;
 	protected LinkedList<Effect> effects;
-
-
-
 	public void init(LinkedList<Unit> units, LinkedList<Tower> tower, Cell[][] grid, LinkedList<Weapon> weapons, LinkedList<Effect> effects){
 		this.units = units ;
 		this.tower = tower ;
@@ -212,8 +157,6 @@ public class Unit {
 		this.effects = effects ;
 		if(pos[0] != -50){
 			this.path = new Path( this.grid );
-
-
 			pathSet = this.path.getPath();
 			if(v == 0){ // if the velocity is 0, than this is a tower
 				grid[cellX][cellY].block();
@@ -226,12 +169,8 @@ public class Unit {
 		turret.add(Unit.testTurret.produce());
 		grow(3.0);
 	}
-	public void addBody(int R, int G, int B, double[] X, double [] Y){
-		body.add( new Poly(X,Y,new Color(R,G,B)));
-	}
-	public void addTurret(int R, int G, int B, double[] X, double [] Y){
-		turret.add( new Poly(X,Y,new Color(R,G,B)));
-	}
+	public void addBody(int R, int G, int B, double[] X, double [] Y){body.add( new Poly(X,Y,new Color(R,G,B)));}
+	public void addTurret(int R, int G, int B, double[] X, double [] Y){turret.add( new Poly(X,Y,new Color(R,G,B)));}
 
 	public void grow( double factor){
 		for( Poly i: body ){
@@ -249,37 +188,30 @@ public class Unit {
 	public void freeze( double n ){
 		freezeTimer = n ;
 		frozen = true ;
-
 	}
 	public void rotateBody(double theta){
 		for(Poly i: body){
 			i.rotate(theta);
 		}
 	}
-
 	public void damage( double amount){
 		hp -= amount;
 		if (hp <= 0){
 			alive = false;
-
 		}
-
 	}
 	public void damageAfterCheck(double size, double x, double y, double amount){
 		if(Math.hypot(x-pos[0],y-pos[1]) < size+(box[0]/2)){
 			damage(amount);
 		}
 	}
-
 	public void kill(){
 		grid[cellX][cellY].remove(this);
 		effects.add( new Explosion(pos[0],pos[1],box[0],20) );
 		alive = false;
 	}
 
-	public boolean getAlive(){
-		return alive;
-	}
+	public boolean getAlive(){return alive;}
 
 	public void moveOrder(double endX, double endY){
 		if(move == true){
@@ -292,9 +224,8 @@ public class Unit {
 	public void updateCellPosition(){
 		cellX = (int)( pos[0]/Global.MAX_SIZE );
 		cellY = (int)( pos[1]/Global.MAX_SIZE );
-
+		
 		if (cellX != oldCellX || cellY != oldCellY){
-
 			grid[oldCellX][oldCellY].remove(this);
 			grid[cellX][cellY].add(this);
 		}
@@ -306,10 +237,8 @@ public class Unit {
 		}
 		if (frozen == false){
 			updateCellPosition();
-
 			if (move == true){
 				if(searchingPath){
-
 					searchPath();
 				}
 				if(foundPath){
@@ -330,7 +259,6 @@ public class Unit {
 	}
 
 	public void findPath(double endX, double endY){ // this is the beginning of the path finding
-
 		if(path == null){
 			path = new Path( this.grid );
 		}
@@ -347,14 +275,11 @@ public class Unit {
 			if(path.done()){
 				searchingPath = false;
 				foundPath = true;
-
 			}
 		}
 	}
-
 	public void startMoving(){ // once the path is found, the object can start moving
 		if(foundPath== true && movingToNextCell == false){
-
 			/* everytime the object arrives at a new point on the path,
 			 * pop a new destination from the pathSet. A path has to be already created
 			 * and the object must be already at the short-hand destination
@@ -368,9 +293,7 @@ public class Unit {
 		}
 
 	}
-
 	public void moveToCell(){
-
 		/* there are three stages to the objects movement
 		 * 1) object is moving to the next cell
 		 * 2) object has made it to the next cell and now needs to find the angle to move the next new cell
@@ -382,21 +305,16 @@ public class Unit {
 		}
 
 		if( (cellX != nextX || cellY != nextY) && movingToNextCell == false && atFinalCell == false){ // stage 2
-
 		// find the new angle that the object needs to head in for the next cell
 			double directionX = nextX-cellX;
 			double directionY = nextY-cellY;
 			double newAngle = Math.atan2(directionY,directionX);
 			rotateBody(newAngle-ang);
 			rotateV( newAngle-ang);
-
 			ang = newAngle;
 			movingToNextCell = true;
-
 		}
-
 		else if (cellX == destinationCellX && cellY == destinationCellY && atFinalCell == false){ // stage 3
-
 			double newAngle = Math.atan2(finalPointY-pos[1],finalPointX-pos[0]);
 			atFinalCell = true;
 			rotateBody(newAngle-ang);
@@ -414,12 +332,9 @@ public class Unit {
 		}
 		pos[0] += vx;
 		pos[1] += vy;
-
-
 	}
 
 	public void mapCollision(){
-
 		/* although the path avoids obstacles, there is always the
 		 * the chance that an obstacle will be placed over time
 		 * in its path. In that case, the unit is stopped and a new
@@ -428,21 +343,15 @@ public class Unit {
 		boolean obstacle = false;
 		while(grid[cellX][cellY].getBlock() == true){
 			obstacle = true;
-
 			pos[0] -= vx;
 			pos[1] -= vy;
 			updateCellPosition();
-
-
 		}
 		if(obstacle == true){
 			moveOrder(finalPointX,finalPointY);
 		}
-
 	}
-
 	public void stopMoving(){
-
 		path.reset();
 		nextCell = null;
 		nextX = 0;
@@ -458,7 +367,6 @@ public class Unit {
 		creatingPath = false; // is the object currently creating a path
 		atFinalCell = false;
 	}
-
 	public void rotateV( double theta ){
 		double newX;
 		double newY;
@@ -468,14 +376,9 @@ public class Unit {
 		vy = newY;
 	}
 
-	public double distance( Unit enemy ){
-		return Math.hypot(enemy.getX()-pos[0],enemy.getY()-pos[1]);
-	}
-
+	public double distance( Unit enemy ){return Math.hypot(enemy.getX()-pos[0],enemy.getY()-pos[1]);}
 	public double getScaledX() {return scaledX;}
 	public double getScaledY() {return scaledY;}
-
-
 	public void rotateTurret(double theta){ // roate the unit based on some angle
 		for(Poly i: turret){
 			i.rotate(theta);
@@ -489,13 +392,11 @@ public class Unit {
 	protected double mapX;
 	protected double mapY;
 	public void scale( double size, double normal, double[] ref ){
-
 		/*
 		 * scale the unit based on the current size of the map,
 		 * the normal size of the map,
 		 * and position of the map
 		 */
-
 		scaleVal = size;
 		scaledX = pos[0]*size/normal + ref[0];
 		scaledY = pos[1]*size/normal + ref[1];
@@ -503,12 +404,8 @@ public class Unit {
 		scaledSize = 4*size/normal;
 		mapX = ref[0];
 		mapY = ref[1];
-		for(Poly i: body){
-			i.scale(size,normal,pos[0], pos[1],ref);
-		}
-		for(Poly i: turret){
-			i.scale(size,normal,pos[0], pos[1],ref);
-		}
+		for(Poly i: body){ i.scale(size,normal,pos[0], pos[1],ref);}
+		for(Poly i: turret){ i.scale(size,normal,pos[0], pos[1],ref);}
 	}
 	public void highlight(){ // highlight the unit
 		for(Poly i: body){ // go through the polygons and put them in "select" mode
@@ -529,7 +426,6 @@ public class Unit {
 		select = false;
 	}
 	public void draw(Graphics g, JFrame c){
-
 		for(Poly i: body){
 			i.draw (g,c) ;
 		}
@@ -550,9 +446,7 @@ public class Unit {
 		}
 		heatBar(g,c);
 		g.setColor(Color.white);
-		if ( select == true){
-
-		}
+		if ( select == true){}
 		else{
 			g.drawString("("+level+")",(int)scaledX,(int)scaledY);
 		}
@@ -567,11 +461,9 @@ public class Unit {
 	}
 
     public boolean check_if_in_Box(double [] rect ){ // returns true if the object is in some box, they are all coordinates
-
         double [] mBox = {rect[0],rect[1],rect[2],rect[3]}; // make a copy of the box to use
         // the nBox needs to converted into the uclidean box
         double [] nBox = {pos[0]-box[0]/2,pos[1]-box[1]/2,pos[0]-box[0]/2+box[0],pos[1]-box[1]/2+box[1]}; // bouding box of unit
-
         if(nBox[0] < mBox[0]){ // flip the boxes if the checking box position is behind the big box
 			double [] tmp = nBox;
             nBox = mBox;
@@ -585,20 +477,16 @@ public class Unit {
                 mBox = tmp;
             }
             if(nBox[1] >= mBox[1] && nBox[1] <= mBox[3]){ // check Y cords
-
                 return true;
             }
         }
-
         return false;
     }
 	public void produce( double x, double y, int level){
-
 		Unit tmp = new Unit(x,y);
 		tmp.init(units,tower,grid,weapons,effects);
 		tmp.upgradeLevel(level);
 		tmp.moveOrder((Global.TILE_AMOUNT/2)*Global.MAX_SIZE-Global.MAX_SIZE/2,(Global.TILE_AMOUNT/2)*Global.MAX_SIZE-Global.MAX_SIZE/2);
 		units.add( tmp );
 	}
-
 }
