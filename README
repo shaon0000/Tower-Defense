@@ -1,5 +1,12 @@
 The largest java file here is the BattleMap class (BattleMap.java). Compiling and launching it starts the game. 
 
+INSTALLING/STARTING THE GAME:
+command line instruction:
+javac BattleMap
+java BattleMap
+
+The first line compiles all the source code. The second line launches the java application.
+
 GENERAL DESCRIPTION:
 Tower defense is a game where you build towers inorder to prevent large swarms of enemy units from overtaking your base. Every kill earns you points, and those points can be used to upgrade or purchase more towers. Be careful though, as creating more towers means you have less points. If your total number of points reach zero, you will lose!
 
@@ -8,10 +15,6 @@ Prevent units from crossing into the center of the map. This is accomplished by 
 
 CONTROLS:
 W, A, S, D moves the map up, left, down, right. Scrolling the mouse wheel zooms in or out of the map.
-
-STARTING THE GAME:
-
-click on the "Tower Defense.bat" file or compile and launch BattleMap.java
 
 FINAL COMMENTS:
 
