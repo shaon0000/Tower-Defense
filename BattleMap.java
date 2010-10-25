@@ -512,10 +512,10 @@ public class BattleMap extends JFrame implements MouseWheelListener,KeyListener,
 		}
 
 		if( gui.getActiveButton("main") != null ){
-			int[] newP = map_translate2D(mP);
-			int cellX = (int)(newP[0]/MAX_SIZE);
-			int cellY = (int)(newP[1]/MAX_SIZE);
-			newP[0] = (int)((int)(newP[0]/MAX_SIZE)*cur_size+ref[0]);
+			int[] newP = map_translate2D(mP); // convert the mouse points to points relative to the map
+			int cellX = (int)(newP[0]/MAX_SIZE); // figure out which cell was clicked
+			int cellY = (int)(newP[1]/MAX_SIZE); 
+			newP[0] = (int)((int)(newP[0]/MAX_SIZE)*cur_size+ref[0]); 
 			newP[1] = (int)((int)(newP[1]/MAX_SIZE)*cur_size+ref[1]);
 			if(cellX >= 0 && cellX < TILE_AMOUNT && cellY >= 0 && cellY < TILE_AMOUNT ){
 				if( human.checkAroundCell(grid,cellX,cellY) == false ){
@@ -528,6 +528,7 @@ public class BattleMap extends JFrame implements MouseWheelListener,KeyListener,
 				}
 			}
 		}
+		// draw all objects on screen
 		drawUnits( dbg ) ;
 		drawEffects( dbg ) ;
 		drawWeapons( dbg ) ;
@@ -567,7 +568,7 @@ public class BattleMap extends JFrame implements MouseWheelListener,KeyListener,
 	int titleColor = 255;
 	int shifter = -1;
 
-	public void statBoard( Graphics g ){
+	public void statBoard( Graphics g ){ // the small board on the bottom left corner
 		g.setColor(Color.gray);
 		g.fillRect(Global.statX,Global.statY,Global.statWidth,Global.statHeight);
 		g.setColor(Color.black);

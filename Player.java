@@ -79,7 +79,7 @@ class Player{
 				selected.add(i);
 			}
 		}
-		if(selected.size() > 0){
+		if(selected.size() > 0){ // if some units are selected, bring up the upgrade menu
 			gui.setVisible("upgrades",true);
 			gui.setVisible("main",false);
 			gui.deactivate("main");
@@ -88,7 +88,7 @@ class Player{
 	
 	public void upgradeSelection(){ // upgrade the units based on what the user clicked in the "upgrade" menu
 		if(selected.size() > 0 && MB == 1 && tb == 0 && gui.getVisible("upgrades") && money >= Global.upgradeCost*selected.size()){
-			String name = gui.getActiveButtonName("upgrades");
+			String name = gui.getActiveButtonName("upgrades"); // get the current active button
 			if(name != null){
 				if( name.equals("+10% attack") ){
 					for( Unit i: selected){

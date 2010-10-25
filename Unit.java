@@ -23,8 +23,6 @@ public class Unit {
 	protected double [] boxY;
 	protected double [] pos;
 	protected boolean alive = true;
-	protected int rand;
-
 	protected double hp=100; // hit points
 	protected double maxHp = 100;
 	protected double ap; // attack power
@@ -33,46 +31,27 @@ public class Unit {
 	protected double vy=0; // velocity in the y direction
 	protected double v=2;
 	protected boolean frozen = false; // can the object move or not
-	protected double bulletV;
-	protected double bulletRad;
-	protected double explosionLife;
-	protected double ang; // the current direction of the turret
-	protected int cellX;
-	protected int cellY;
-	protected int oldCellX;
-	protected int oldCellY;
+	protected double bulletV, bulletRad, explosionLife, ang, rand;
+	protected int cellX, cellY, oldCellX, oldCellY;
+	protected double scaledX, scaledY, scaledZ, scaledSize, scaleVal, mapX, mapY;
 	public double getRange(){ return range;}
 	public double getAttack(){ return ap;}
 	public double getLevel(){ return level;}
 	/***======= path finding variables ==========***/
-	protected boolean searchingPath; // is the object searching for a path
-	protected boolean move; // is the object moving
-	protected boolean foundPath; // did the object find a path
-	protected boolean creatingPath; // is the object currently creating a path
-	protected boolean movingToNextCell = false;
-	protected boolean atFinalCell = false;
+	protected boolean searchingPath, move, foundPath, creatingPath, movingToNextCell, atFinalCell; // is the object searching for a path
 	protected Path path;
 	protected LinkedList<Point> pathSet = null;
 	protected Point nextCell = null;
-	protected int nextX = 0;
-	protected int nextY = 0;
-	protected double finalPointX = 0;
-	protected double finalPointY = 0;
-	protected int destinationCellX;
-	protected int destinationCellY;
+	protected int nextX, nextY, destinationCellX, destinationCellY;
+	protected double finalPointX, finalPointY;
 	protected Cell[][] grid;
 	/***** COMMAND VARIABLES *****/
-	protected boolean select; // is the object selected
-	protected boolean attack; // is the object going to attack
-	protected boolean searchingForEnemey; // is the object searching for an enemy;
-	protected boolean foundEnemy; // did the unit fnd an enemy
+	protected boolean select, attack, searchingForEnemy, foundEnemy; // is the object selected
 	/* ~~~~~~~~~~~~~~~~~~~~~ scan/attack/hunt variables ~~~~~~~~~~ */
 	protected Unit target; // the enemies that this unit is going to keep hunting
 	protected LinkedList<Unit> allTargets = new LinkedList<Unit>();
-	protected int heat;
-	protected int heatCounter;
-	protected LinkedList<Poly> body; // body frame
-	protected LinkedList<Poly> turret; // turret frame
+	protected int heat, heatCounter;
+	protected LinkedList<Poly> body, turret; // body frame
 	protected Graphics g;
 	protected JFrame c;
 	protected int level = 1;
@@ -164,7 +143,7 @@ public class Unit {
 		}
 	}
 
-	public void testingMode(){
+	public void testingMode(){ // originally designed to create a test unit, the test unit is left in
 		body.add(Unit.testBody.produce());
 		turret.add(Unit.testTurret.produce());
 		grow(3.0);
@@ -172,8 +151,8 @@ public class Unit {
 	public void addBody(int R, int G, int B, double[] X, double [] Y){body.add( new Poly(X,Y,new Color(R,G,B)));}
 	public void addTurret(int R, int G, int B, double[] X, double [] Y){turret.add( new Poly(X,Y,new Color(R,G,B)));}
 
-	public void grow( double factor){
-		for( Poly i: body ){
+	public void grow( double factor){ // enlarge the unit
+ 		for( Poly i: body ){
 			i.grow( factor );
 		}
 		for (Poly i : turret){
@@ -184,28 +163,28 @@ public class Unit {
 		box[1] *= factor;
 		rand *= factor;
 	}
-	double freezeTimer = 0;
-	public void freeze( double n ){
+	double freezeTimer = 0; 
+	public void freeze( double n ){ // halt all operations on this unit
 		freezeTimer = n ;
 		frozen = true ;
 	}
-	public void rotateBody(double theta){
+	public void rotateBody(double theta){ // rotate the body polygons of the unit
 		for(Poly i: body){
 			i.rotate(theta);
 		}
 	}
-	public void damage( double amount){
+	public void damage( double amount){ // damage the unit
 		hp -= amount;
 		if (hp <= 0){
 			alive = false;
 		}
 	}
-	public void damageAfterCheck(double size, double x, double y, double amount){
+	public void damageAfterCheck(double size, double x, double y, double amount){ 
 		if(Math.hypot(x-pos[0],y-pos[1]) < size+(box[0]/2)){
 			damage(amount);
 		}
 	}
-	public void kill(){
+	public void kill(){ 
 		grid[cellX][cellY].remove(this);
 		effects.add( new Explosion(pos[0],pos[1],box[0],20) );
 		alive = false;
@@ -230,23 +209,23 @@ public class Unit {
 			grid[cellX][cellY].add(this);
 		}
 	}
-	public void work(){
+	public void work(){ // gets called once per iteration. Unit logic is performed here
 		if(hp <= 0){
 			kill();
 			return;
 		}
-		if (frozen == false){
+		if (frozen == false){ // if the unit is allowed to work
 			updateCellPosition();
-			if (move == true){
-				if(searchingPath){
+			if (move == true){ // if the unit is in move mode
+				if(searchingPath){ // if the unit is still searching for a path
 					searchPath();
 				}
-				if(foundPath){
+				if(foundPath){ // if the path is found
 					startMoving();
 					moveToCell();
 				}
 			}
-			oldCellX = cellX;
+			oldCellX = cellX; 
 			oldCellY = cellY;
 		}
 		else{
@@ -269,10 +248,10 @@ public class Unit {
 		finalPointY = endY;
 	}
 
-	public void searchPath(){
-		if (searchingPath){
-			path.execute();
-			if(path.done()){
+	public void searchPath(){ // the path finding algorithim builds slowly. It takes a few iteration to actually create a path
+		if (searchingPath){ 
+			path.execute(); // execute the A* algorithim
+			if(path.done()){ // if its done, move to next stage
 				searchingPath = false;
 				foundPath = true;
 			}
@@ -351,7 +330,7 @@ public class Unit {
 			moveOrder(finalPointX,finalPointY);
 		}
 	}
-	public void stopMoving(){
+	public void stopMoving(){ // reset the unit
 		path.reset();
 		nextCell = null;
 		nextX = 0;
@@ -384,13 +363,6 @@ public class Unit {
 			i.rotate(theta);
 		}
 	}
-	protected double scaledX;
-	protected double scaledY;
-	protected double scaledZ;
-	protected double scaledSize;
-	protected double scaleVal;
-	protected double mapX;
-	protected double mapY;
 	public void scale( double size, double normal, double[] ref ){
 		/*
 		 * scale the unit based on the current size of the map,
@@ -482,7 +454,8 @@ public class Unit {
         }
         return false;
     }
-	public void produce( double x, double y, int level){
+	public void produce( double x, double y, int level){ // take this unit and produce another unit with similiar stats.
+	    // this also allows us to attach a production unit to a button to build units at O(1) time.
 		Unit tmp = new Unit(x,y);
 		tmp.init(units,tower,grid,weapons,effects);
 		tmp.upgradeLevel(level);
