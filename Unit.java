@@ -71,7 +71,8 @@ public class Unit {
 	public void multiplyAP(double val){ap *= val;}
 	public void multiplyHP( double val ){maxHp *= val;}
 	public void multiplyDamageRadius( double val ){bulletRad *= val;}
-	public int randint(int a, int b){return (int)(Math.random()*(b-a+1)) + a;}
+	public int randint(int a, int b){return (int)(Math.random()*(b-a+1)) + (int)(a);}
+	public int randint(double a, double b){return (int)(Math.random()*(b-a+1)) + (int)(a);}
 	public double getX(){return pos[0];}
 	public double getY(){return pos[1];}
 	public int getCellX(){return cellX;}
