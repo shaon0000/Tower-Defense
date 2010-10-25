@@ -1,4 +1,4 @@
-The largest java file here is the BattleMap class. Compiling and launching it starts the game. Alternatively, a bat file is already created to automatically launch it in windows. 
+The largest java file here is the BattleMap class (BattleMap.java). Compiling and launching it starts the game. 
 
 GENERAL DESCRIPTION:
 Tower defense is a game where you build towers inorder to prevent large swarms of enemy units from overtaking your base. Every kill earns you points, and those points can be used to upgrade or purchase more towers. Be careful though, as creating more towers means you have less points. If your total number of points reach zero, you will lose!
@@ -13,7 +13,10 @@ STARTING THE GAME:
 
 click on the "Tower Defense.bat" file or compile and launch BattleMap.java
 
-GENERAL PURPOSE:
+FINAL COMMENTS:
 
-I built this game as a way for me to get the hang of java and all of its principles. It isn't the most fun game I've made, and it could use a bit more polish such as sound effects and a content creator, but it works smoothly (except in certain cases like when you have lots of effects on the screen).
+I built this game as a way for me to get the hang of java and all of its principles and rules with regard to OOP design. The three things that I like in this project is the custom GUI classes, the 3D shape rendering classes, and the large number of visual effects that I created. The algorithim for the zoom in/out and scaling of polygons was something I cooked up originally in Python and then ported over (and made signficantly cleaner) in Java. 
 
+There are also parts in the code and design decisions that I'm not very proud of. For example, the X, Y co-ordinates of each Polygon are in two seperate arrays and they are hard-coded. This may have been an obscure decision on my part made in same late part of the night at which point I decided to not care about it but it severely limited how fast I can create content. I also somehow deleted the UnitMaker program that I built previously, which is a shame, since that offset the content creation time lag due to the first design decision. Some of the files could also use more comments with regards to how things are done. There are also some known bugs. For example, the scrolling isn't very smooth with a laptop scroll pad, and LinkedLists that have too many objects or LinkedLists that add way too many objects in iteration seem to throw concurrency errors. 
+
+Aside from those issues, the game is very much playable and something I could show to other programmers or friends alike.
