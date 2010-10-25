@@ -250,16 +250,16 @@ public class BattleMap extends JFrame implements MouseWheelListener,KeyListener,
 		for(int i = 1; i < TILE_AMOUNT; i++ ){ startSet.add(new Point(TILE_AMOUNT-1,i)); }
 		for(int i = 1; i < TILE_AMOUNT; i++ ){ startSet.add(new Point(i,TILE_AMOUNT-1)); }
 		Collections.shuffle( startSet );
-		Tower tmp = new LaserTower( (TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2 ) ;
+		Tower tmp = new LightningTower( (TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2 ) ;
 		tmp.init( unitSet,towerSet,grid,weaponSet,effectSet ) ;
 		towerSet.add( tmp ) ;
 		tmp = new LaserTower( (TILE_AMOUNT/2 + 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 + 1)* MAX_SIZE-MAX_SIZE/2 ) ;
 		tmp.init( unitSet,towerSet,grid,weaponSet,effectSet ) ;
 		towerSet.add( tmp ) ;
-		tmp = new LaserTower( (TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 + 1)*MAX_SIZE-MAX_SIZE/2 ) ;
+		tmp = new Tower( (TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 + 1)*MAX_SIZE-MAX_SIZE/2 ) ;
 		tmp.init( unitSet,towerSet,grid,weaponSet,effectSet ) ;
 		towerSet.add( tmp ) ;
-		tmp = new LaserTower( (TILE_AMOUNT/2 + 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2 ) ;
+		tmp = new ForceTower( (TILE_AMOUNT/2 + 1)*MAX_SIZE-MAX_SIZE/2,(TILE_AMOUNT/2 - 1)*MAX_SIZE-MAX_SIZE/2 ) ;
 		tmp.init( unitSet,towerSet,grid,weaponSet,effectSet ) ;
 		towerSet.add( tmp ) ;
 	}

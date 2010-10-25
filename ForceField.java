@@ -63,7 +63,7 @@ public class ForceField extends Lightning{
 			for(int i = 1; i < scaled_X.length; i++){
 				g.drawLine((int)scaled_X[i],(int)scaled_Y[i],(int)scaled_X[i-1],(int)scaled_Y[i-1]);
 			}
-			g.drawOval((int)(scaled_X[0]-scaledRange),(int)(scaled_Y[0]-scaledRange),(int)(2*scaledRange),(int)(2*scaledRange));
+			//g.drawOval((int)(scaled_X[0]-scaledRange),(int)(scaled_Y[0]-scaledRange),(int)(2*scaledRange),(int)(2*scaledRange));
 		}
 		G -= 20;
 		if ( G < 0 || original == false && weapons.size() != 0){
